@@ -1,0 +1,80 @@
+@import "tailwindcss";
+
+@theme {
+  --color-beige: #FFF8F0;
+  --color-marron: #4B2E2B;
+  --color-kaki: #C08552;
+}
+
+.form {
+  width: 100%;
+  max-width: 22rem;
+
+  margin-left: auto;
+  margin-right: auto;
+
+  border-radius: 1.5rem;
+  padding: 1.5rem;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  box-sizing: border-box;
+}
+
+.form-label{
+  color: var(--color-beige);
+  font-size: 1.125rem;
+  font-weight: 500;
+  padding: 0.25rem 0.5rem;
+  margin-top:0.5rem;
+}
+
+.form-input{
+  background-color: var(--color-beige);
+border-radius: 0.9rem;
+padding: 0.25rem 0.6rem;
+color: color-mix(in srgb, var(--color-marron) 150%, transparent);
+outline: none;
+font-size: 1.15rem;
+font-weight: 600;
+}
+::placeholder {
+  font-size: 1.125rem;
+  color: color-mix(in srgb, var(--color-marron) 70%, transparent);
+}
+
+.password-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.password-input-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.password-input-wrapper .form-input {
+  width: 100%;
+  padding-right: 2.8rem;
+}
+
+.password-toggle {
+  position: absolute;
+  right: 0.8rem;
+  top: 50%;
+  transform: translateY(-50%);
+
+  border: none;
+  background: transparent;
+  padding: 0;
+
+  color: var(--color-marron);
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
