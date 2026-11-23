@@ -1,0 +1,52 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model events {
+  event_id       BigInt          @id @default(autoincrement())
+  title          String
+  description    String
+  event_date     DateTime        @unique @db.Date
+  event_time     DateTime        @db.Time(6)
+  event_location String          @default
+  ("")
+  image_url String?
+  capacity       Int
+  organizer_id   BigInt
+  created_at     DateTime?       @default(now()) @db.Timestamptz(6)
+  users          users           @relation(fields: [organizer_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "fk_organizer")
+  registrations  registrations[]
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model registrations {
+  reg_id     BigInt    @id @default(autoincrement())
+  reg_date   DateTime  @unique @db.Date
+  reg_statu  String
+  user_id    BigInt
+  event_id   BigInt
+  created_at DateTime? @default(now()) @db.Timestamptz(6)
+  events     events    @relation(fields: [event_id], references: [event_id], onDelete: Cascade, onUpdate: NoAction, map: "fk_event")
+  users      users     @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "fk_user")
+
+  @@unique([user_id, event_id], map: "unique_registration")
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model users {
+  id            BigInt          @id @default(autoincrement())
+  first_name    String
+  last_name     String
+  email         String          @unique
+  password      String
+  created_at    DateTime?       @default(now()) @db.Timestamptz(6)
+  events        events[]
+  registrations registrations[]
+}
